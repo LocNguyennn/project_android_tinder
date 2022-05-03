@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Login">
+
+
+        <ImageView
+            android:id="@+id/appLogo"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/dating_chat_icon"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="70dp" />
+
+        <EditText
+            android:id="@+id/login_Email"
+            android:layout_width="375dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/appLogo"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="26dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/edt_background"
+            android:hint="Email"
+            android:paddingLeft="15dp" />
+
+        <EditText
+            android:id="@+id/login_Password"
+            android:layout_width="390dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/appLogo"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="105dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/edt_background"
+            android:hint="Password"
+            android:paddingLeft="15dp" />
+
+        <TextView
+            android:id="@+id/login_Forgotpass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnLogin"
+            android:layout_alignEnd="@+id/appLogo"
+            android:layout_marginTop="-102dp"
+            android:layout_marginEnd="-100dp"
+            android:layout_marginBottom="20dp"
+            android:text="Forgot your password ?"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/login_Password"
+            android:layout_alignEnd="@+id/login_Password"
+            android:layout_marginTop="63dp"
+            android:layout_marginEnd="112dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/royalblue_background"
+            android:fontFamily="sans-serif-black"
+            android:text="LOG IN"
+            android:textColor="@color/white"
+            android:textSize="15dp" />
+
+        <ImageView
+            android:id="@+id/googleLogo"
+            android:layout_width="25dp"
+            android:layout_height="27dp"
+            android:layout_below="@+id/btnLogin"
+            android:layout_alignStart="@+id/btnLogin"
+            android:layout_alignEnd="@+id/btnLogin"
+            android:layout_marginStart="-6dp"
+            android:layout_marginTop="116dp"
+            android:layout_marginEnd="130dp"
+            android:src="@drawable/google_icon" />
+
+        <ImageView
+            android:id="@+id/facebookLogo"
+            android:layout_width="53dp"
+            android:layout_height="41dp"
+            android:layout_below="@+id/btnLogin"
+            android:layout_alignStart="@+id/btnLogin"
+            android:layout_alignEnd="@+id/btnSignup"
+            android:layout_marginStart="118dp"
+            android:layout_marginTop="109dp"
+            android:layout_marginEnd="52dp"
+            android:src="@drawable/facebook_icon" />
+
+        <TextView
+            android:id="@+id/dontHaveAnAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnLogin"
+            android:layout_alignEnd="@+id/appLogo"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="187dp"
+            android:layout_marginEnd="22dp"
+            android:layout_marginBottom="11dp"
+            android:text="Dont have an account ?"
+            android:textSize="20dp"
+            android:textStyle="italic" />
+
+        <Button
+            android:id="@+id/btnSignup"
+            android:layout_width="wrap_content"
+            android:layout_height="27dp"
+            android:layout_below="@id/login_Password"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="304dp"
+            android:layout_marginEnd="59dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/royalblue_background"
+            android:fontFamily="sans-serif-black"
+            android:text="Sign up"
+            android:textColor="@color/white"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnLogin"
+            android:layout_alignStart="@+id/btnLogin"
+            android:layout_alignEnd="@+id/btnLogin"
+            android:layout_marginStart="65dp"
+            android:layout_marginTop="129dp"
+            android:layout_marginEnd="27dp"
+            android:text="OR"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="120dp"
+            android:layout_height="39dp"
+            android:layout_below="@+id/btnLogin"
+            android:layout_alignStart="@+id/btnLogin"
+            android:layout_alignEnd="@+id/btnLogin"
+            android:layout_marginStart="33dp"
+            android:layout_marginTop="61dp"
+            android:layout_marginEnd="-3dp"
+            android:text="Login with"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+</layout>
