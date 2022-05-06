@@ -1,4 +1,4 @@
-package com.example.chattingapp
+package com.example.chattingapp.Model
 
 class User {
     var name: String? = null

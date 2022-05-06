@@ -1,21 +1,22 @@
-package com.example.chattingapp
+package com.example.chattingapp.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.chattingapp.Model.User
 import com.example.chattingapp.databinding.UserLayoutBinding
 
-class UserAdapter(val mListener : OnItemClickListener) : ListAdapter<User, UserAdapter.UserVH>(MovieDiffUtilCallback()) {
+class UserAdapter(val mListener: OnItemClickListener) : ListAdapter<User, UserAdapter.UserVH>(
+    UserDiffUtilCallback()
+) {
 
-    interface OnItemClickListener{
+    interface OnItemClickListener {
         fun onItemClick(position: Int)
     }
-    class MovieDiffUtilCallback : DiffUtil.ItemCallback<User>() {
+
+    class UserDiffUtilCallback : DiffUtil.ItemCallback<User>() {
         override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
             return oldItem.uid == newItem.uid
         }
@@ -25,17 +26,21 @@ class UserAdapter(val mListener : OnItemClickListener) : ListAdapter<User, UserA
         }
     }
 
-    class UserVH private constructor(var binding: UserLayoutBinding,listener : OnItemClickListener) :
+    class UserVH private constructor(
+        var binding: UserLayoutBinding,
+        listener: OnItemClickListener
+    ) :
         RecyclerView.ViewHolder(binding.root) {
         companion object {
-            fun from(parent: ViewGroup,listener : OnItemClickListener): UserVH {
+            fun from(parent: ViewGroup, listener: OnItemClickListener): UserVH {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = UserLayoutBinding.inflate(layoutInflater, parent, false)
-                return UserVH(binding,listener)
+                return UserVH(binding, listener)
             }
         }
-        init{
-            itemView.setOnClickListener{
+
+        init {
+            itemView.setOnClickListener {
                 listener.onItemClick(adapterPosition)
             }
         }
@@ -46,14 +51,11 @@ class UserAdapter(val mListener : OnItemClickListener) : ListAdapter<User, UserA
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserVH {
-        return UserVH.from(parent,mListener)
+        return UserVH.from(parent, mListener)
     }
 
     override fun onBindViewHolder(holder: UserVH, position: Int) {
-        val movie = getItem(position)
-        holder.binding(movie)
-    }
-    fun getMovie(position: Int): User {
-        return getItem(position);
+        val user = getItem(position)
+        holder.binding(user)
     }
 }

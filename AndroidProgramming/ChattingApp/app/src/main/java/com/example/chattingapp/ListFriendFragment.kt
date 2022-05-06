@@ -2,14 +2,16 @@ package com.example.chattingapp
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.chattingapp.Model.User
+import com.example.chattingapp.adapter.UserAdapter
 import com.example.chattingapp.databinding.FragmentListFriendBinding
 import com.example.chattingapp.viewModel.ListFriendViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -45,6 +47,7 @@ class ListFriendFragment : Fragment(), UserAdapter.OnItemClickListener {
         registerData()
         addListOfFriend()
     }
+
 
     override fun onStart() {
         super.onStart()
@@ -99,7 +102,15 @@ class ListFriendFragment : Fragment(), UserAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(position: Int) {
-        TODO("Not yet implemented")
+        val name = userList[position].name
+        val uid = userList[position].uid
+        val bundle = Bundle()
+        bundle.putString("name", name)
+        bundle.putString("uid",uid)
+        val fragment = ChatFragment()
+        fragment.arguments = bundle
+        fragmentManager?.beginTransaction()?.replace(R.id.nav_host_fragment,fragment)?.commit()
+        findNavController().navigate(R.id.action_listFriendFragment_to_chatFragment)
     }
 
 }

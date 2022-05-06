@@ -40,6 +40,7 @@
                 android:layout_weight="95" />
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSend"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:background="@drawable/sending_icon"

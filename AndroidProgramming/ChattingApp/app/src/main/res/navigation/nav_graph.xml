@@ -40,10 +40,26 @@
         android:name="com.example.chattingapp.ProfileFragment"
         android:label="ProfileFragment"
 
-        tools:layout="@layout/fragment_profile"/>
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
     <fragment
         android:id="@+id/listFriendFragment"
         android:name="com.example.chattingapp.ListFriendFragment"
         android:label="ListFriendFragment"
-        tools:layout="@layout/fragment_list_friend"/>
+        tools:layout="@layout/fragment_list_friend">
+        <action
+            android:id="@+id/action_listFriendFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.chattingapp.ChatFragment"
+        android:label="ChatFragment"
+        tools:layout="@layout/fragment_chat"/>
 </navigation>

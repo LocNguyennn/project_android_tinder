@@ -3,7 +3,6 @@ package com.example.chattingapp.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.chattingapp.User
 import java.util.regex.Pattern
 
 class SignUpViewModel : ViewModel() {
