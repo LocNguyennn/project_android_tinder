@@ -78,7 +78,10 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
                 userList.clear()
                 for (postSnapshot in snapshot.children) {
                     val currentUser = postSnapshot.getValue(User::class.java)
-                    if (mAuth.currentUser?.uid != currentUser?.uid && !listFriend.contains(currentUser?.uid)) {
+                    if (mAuth.currentUser?.uid != currentUser?.uid && !listFriend.contains(
+                            currentUser?.uid
+                        )
+                    ) {
                         userList.add(currentUser!!)
                     }
                 }
@@ -91,6 +94,7 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
             }
         })
     }
+
 
     private fun loadListFriend() {
         mDbRef.child("user")
