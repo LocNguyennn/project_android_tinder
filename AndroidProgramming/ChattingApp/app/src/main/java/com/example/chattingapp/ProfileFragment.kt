@@ -93,7 +93,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun addImageToRealtimeDatabase() {
-        FirebaseStorage.getInstance().getReference("images/${mAuth.currentUser?.uid}").downloadUrl.addOnSuccessListener {
+        FirebaseStorage.getInstance().getReference("images/${mAuth.currentUser?.uid.toString()}.jpeg").downloadUrl.addOnSuccessListener {
             mDbRef.child("user").child(mAuth.currentUser?.uid.toString())
                 .child("imageUrl").setValue(it.toString()).addOnCompleteListener{
                     if(it.isSuccessful){
