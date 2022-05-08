@@ -5,6 +5,7 @@ class User {
     var email: String? = null
     var uid: String? = null
     var friendUid : ArrayList<String>? = null
+    var imageUrl : String? = null
 
     constructor(){}
 
@@ -25,6 +26,7 @@ class User {
         if (email != other.email) return false
         if (uid != other.uid) return false
         if (friendUid != other.friendUid) return false
+        if (imageUrl != other.imageUrl) return false
 
         return true
     }
@@ -34,8 +36,10 @@ class User {
         result = 31 * result + (email?.hashCode() ?: 0)
         result = 31 * result + (uid?.hashCode() ?: 0)
         result = 31 * result + (friendUid?.hashCode() ?: 0)
+        result = 31 * result + (imageUrl?.hashCode() ?: 0)
         return result
     }
+
 
 
 }

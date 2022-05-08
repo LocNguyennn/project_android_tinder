@@ -1,5 +1,6 @@
 package com.example.chattingapp
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -80,12 +81,20 @@ class SignUpFragment : Fragment() {
     }
 
     private fun signUp(name: String, email: String, password: String) {
+        val progressDialog = ProgressDialog(requireContext())
+        progressDialog.setMessage("Creating account...")
+        progressDialog.setCancelable(false)
+        progressDialog.show()
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
                     addUserToDatabase(name, email, mAuth.currentUser?.uid!!)
+                    if(progressDialog.isShowing)
+                        progressDialog.dismiss()
                     findNavController().navigate(R.id.action_signUpFragment_to_loginFragment)
                 } else {
+                    if(progressDialog.isShowing)
+                        progressDialog.dismiss()
                     Toast.makeText(requireContext(), "Some error occurred", Toast.LENGTH_SHORT)
                         .show()
                 }

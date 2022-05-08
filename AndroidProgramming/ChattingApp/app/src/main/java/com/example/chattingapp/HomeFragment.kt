@@ -49,6 +49,7 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUp()
+//        viewModel.loadData(userList)
         registerData()
         loadListFriend()
         addListOfUser()
@@ -60,10 +61,6 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        viewModel.loadData(userList)
-    }
 
     private fun registerData() {
         viewModel.listOfData.observe(viewLifecycleOwner) {
@@ -93,6 +90,7 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
 
             }
         })
+//        mDbRef.child("user").
     }
 
 
@@ -126,9 +124,7 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
             .setValue(list)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    userList.removeAt(position)
-                    adapter.notifyItemRemoved(position)
-                    Toast.makeText(requireContext(), "Match successful", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Match ${userList[position].name} successful", Toast.LENGTH_SHORT).show()
                 }
             }
     }
