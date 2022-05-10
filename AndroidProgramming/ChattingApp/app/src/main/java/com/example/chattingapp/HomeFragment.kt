@@ -102,7 +102,7 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         for (postSnapshot in snapshot.children) {
-                            val stringUid = postSnapshot.getValue(String::class.java);
+                            val stringUid = postSnapshot.getValue(String::class.java)
                             listFriend.add(stringUid.toString())
                         }
                     }
