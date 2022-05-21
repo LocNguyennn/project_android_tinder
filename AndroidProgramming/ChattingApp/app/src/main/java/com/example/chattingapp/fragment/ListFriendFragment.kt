@@ -20,6 +20,7 @@ import com.example.chattingapp.viewModel.ListFriendViewModel
 import com.example.chattingapp.viewModel.SharedViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import kotlinx.coroutines.processNextEventInCurrentThread
 
 class ListFriendFragment : Fragment(), UserAdapter.OnItemClickListener{
     private lateinit var binding: FragmentListFriendBinding

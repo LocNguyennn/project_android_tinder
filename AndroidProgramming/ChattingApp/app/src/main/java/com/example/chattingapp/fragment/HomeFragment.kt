@@ -110,23 +110,23 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
                 override fun onCancelled(error: DatabaseError) {
 
                 }
-
             })
         return list
     }
 
     override fun onItemClick(position: Int) {
-        listFriend.add(userList[position].uid.toString())
+        val user = userList[position]
+        Toast.makeText(requireContext(), "Match ${user.name} successful", Toast.LENGTH_SHORT).show()
+        listFriend.add(user.uid.toString())
         val list: List<String> = listFriend
         mDbRef.child("user")
-            .child(mAuth.currentUser?.uid!!)
+            .child(mAuth.currentUser?.uid.toString())
             .child("friendUid")
             .setValue(list)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    Toast.makeText(requireContext(), "Match ${userList[position].name} successful", Toast.LENGTH_SHORT).show()
                     var targetListFriend : ArrayList<String> = ArrayList()
-                    targetListFriend = loadListFriend(userList[position].uid.toString(),targetListFriend)
+                    targetListFriend = loadListFriend(user.uid.toString(),targetListFriend)
                     targetListFriend.add(mAuth.currentUser?.uid.toString())
                     val targetList : List<String> = targetListFriend
                     mDbRef.child("user")
