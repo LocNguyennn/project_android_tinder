@@ -1,4 +1,4 @@
-package com.example.chattingapp
+package com.example.chattingapp.fragment
 
 import android.app.Activity.RESULT_OK
 import android.app.ProgressDialog
@@ -12,8 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.example.chattingapp.R
 import com.example.chattingapp.databinding.FragmentProfileBinding
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage

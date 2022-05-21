@@ -1,17 +1,15 @@
-package com.example.chattingapp
+package com.example.chattingapp.fragment
 
-import android.app.ActionBar
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.rotationMatrix
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.chattingapp.R
 import com.example.chattingapp.databinding.FragmentLoginBinding
 import com.example.chattingapp.viewModel.LoginViewModel
 import com.google.firebase.auth.FirebaseAuth

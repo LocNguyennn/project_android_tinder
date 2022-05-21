@@ -1,8 +1,7 @@
-package com.example.chattingapp
+package com.example.chattingapp.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chattingapp.Model.User
+import com.example.chattingapp.R
 import com.example.chattingapp.adapter.UserAdapter
 import com.example.chattingapp.databinding.FragmentHomeBinding
 import com.example.chattingapp.viewModel.HomeViewModel
@@ -51,7 +51,7 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
         setUp()
 //        viewModel.loadData(userList)
         registerData()
-        loadListFriend()
+        listFriend = loadListFriend(mAuth.currentUser?.uid.toString(),listFriend)
         addListOfUser()
         binding.btnListFriend.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_listFriendFragment)
@@ -90,20 +90,19 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
 
             }
         })
-//        mDbRef.child("user").
     }
 
 
-    private fun loadListFriend() {
+    private fun loadListFriend(userUid: String, list : ArrayList<String>) : ArrayList<String>{
         mDbRef.child("user")
-            .child(mAuth.currentUser?.uid.toString())
+            .child(userUid)
             .child("friendUid")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         for (postSnapshot in snapshot.children) {
                             val stringUid = postSnapshot.getValue(String::class.java)
-                            listFriend.add(stringUid.toString())
+                            list.add(stringUid.toString())
                         }
                     }
                 }
@@ -113,6 +112,7 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
                 }
 
             })
+        return list
     }
 
     override fun onItemClick(position: Int) {
@@ -125,8 +125,17 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     Toast.makeText(requireContext(), "Match ${userList[position].name} successful", Toast.LENGTH_SHORT).show()
+                    var targetListFriend : ArrayList<String> = ArrayList()
+                    targetListFriend = loadListFriend(userList[position].uid.toString(),targetListFriend)
+                    targetListFriend.add(mAuth.currentUser?.uid.toString())
+                    val targetList : List<String> = targetListFriend
+                    mDbRef.child("user")
+                        .child(userList[position].uid.toString())
+                        .child("friendUid")
+                        .setValue(targetList)
                 }
             }
+//        Toast.makeText(requireContext(), "Match ${userList[position].name} successful", Toast.LENGTH_SHORT).show()
     }
 
     private fun setUp() {

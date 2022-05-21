@@ -1,4 +1,4 @@
-package com.example.chattingapp
+package com.example.chattingapp.fragment
 
 import android.app.ProgressDialog
 import android.os.Bundle
@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.chattingapp.Model.User
+import com.example.chattingapp.R
 import com.example.chattingapp.databinding.FragmentSignUpBinding
 import com.example.chattingapp.viewModel.SignUpViewModel
 import com.google.firebase.auth.FirebaseAuth
