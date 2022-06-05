@@ -13,14 +13,22 @@
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment"
-            app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loginFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.example.chattingapp.fragment.SignUpFragment"
         android:label="SignUpFragment"
         tools:layout="@layout/fragment_sign_up">
+        <action
+            android:id="@+id/action_signUpFragment_to_signUpInfoFragment"
+            app:destination="@id/signUpInfoFragment" />
         <action
             android:id="@+id/action_signUpFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -46,9 +54,8 @@
         <action
             android:id="@+id/action_profileFragment_to_loginFragment"
             app:destination="@id/loginFragment"
-            app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="true"
-            />
+            app:popUpTo="@id/welcomeFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/listFriendFragment"
@@ -74,6 +81,11 @@
             app:destination="@id/viewPagerFragment"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_splashFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/viewPagerFragment"
@@ -81,9 +93,34 @@
         android:label="ViewPagerFragment"
         tools:layout="@layout/fragment_view_pager">
         <action
-            android:id="@+id/action_viewPagerFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment"
+            android:id="@+id/action_viewPagerFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment"
             app:popUpTo="@id/viewPagerFragment"
             app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.example.chattingapp.fragment.WelcomeFragment"
+        android:label="WelcomeFragment"
+        tools:layout="@layout/fragment_welcome">
+        <action
+            android:id="@+id/action_welcomeFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpInfoFragment"
+        android:name="com.example.chattingapp.fragment.SignUpInfoFragment"
+        android:label="SignUpInfoFragment"
+        tools:layout="@layout/fragment_sign_up_info"
+        >
+        <action
+            android:id="@+id/action_signUpInfoFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

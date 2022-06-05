@@ -2,17 +2,15 @@ package com.example.chattingapp.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.chattingapp.Model.User
+import com.example.chattingapp.model.User
 import com.example.chattingapp.R
 import com.example.chattingapp.adapter.UserAdapter
 import com.example.chattingapp.databinding.FragmentListFriendBinding
@@ -20,7 +18,6 @@ import com.example.chattingapp.viewModel.ListFriendViewModel
 import com.example.chattingapp.viewModel.SharedViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import kotlinx.coroutines.processNextEventInCurrentThread
 
 class ListFriendFragment : Fragment(), UserAdapter.OnItemClickListener{
     private lateinit var binding: FragmentListFriendBinding

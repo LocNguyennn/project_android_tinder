@@ -1,4 +1,8 @@
-package com.example.chattingapp.Model
+package com.example.chattingapp.model
+
+import java.time.LocalDate
+import java.util.*
+import kotlin.collections.ArrayList
 
 class User {
     var name: String? = null
@@ -6,15 +10,22 @@ class User {
     var uid: String? = null
     var friendUid : ArrayList<String>? = null
     var imageUrl : String? = null
-
+    var gender : String? = null
+    var birthDay: Date? = null
+    var shortIntro: String? = null
     constructor(){}
 
     constructor(name: String?, email: String?, uid: String?){
         this.name = name
         this.email = email
         this.uid = uid
-//        this.friendUid = friendUid
     }
+
+    constructor(gender: String?, birthDay: Date?) {
+        this.gender = gender
+        this.birthDay = birthDay
+    }
+
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

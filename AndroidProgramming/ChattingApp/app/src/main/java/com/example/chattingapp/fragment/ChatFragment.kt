@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.chattingapp.Model.Message
+import com.example.chattingapp.model.Message
 import com.example.chattingapp.adapter.MessageAdapter
 import com.example.chattingapp.databinding.FragmentChatBinding
 import com.example.chattingapp.viewModel.SharedViewModel

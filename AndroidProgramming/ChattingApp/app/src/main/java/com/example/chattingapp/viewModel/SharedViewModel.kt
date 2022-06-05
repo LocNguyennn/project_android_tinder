@@ -1,7 +1,7 @@
 package com.example.chattingapp.viewModel
 
 import androidx.lifecycle.ViewModel
-import com.example.chattingapp.Model.User
+import com.example.chattingapp.model.User
 
 class SharedViewModel : ViewModel() {
     private var user = User()

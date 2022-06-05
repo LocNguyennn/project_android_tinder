@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.chattingapp.Model.User
+import com.example.chattingapp.model.User
 import com.example.chattingapp.databinding.UserLayoutBinding
 
 class UserAdapter(val mListener: OnItemClickListener) : ListAdapter<User, UserAdapter.UserVH>(

@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.chattingapp.Model.User
+import com.example.chattingapp.model.User
 import com.example.chattingapp.R
 import com.example.chattingapp.databinding.FragmentSignUpBinding
 import com.example.chattingapp.viewModel.SignUpViewModel
@@ -92,7 +92,7 @@ class SignUpFragment : Fragment() {
                     addUserToDatabase(name, email, mAuth.currentUser?.uid!!)
                     if(progressDialog.isShowing)
                         progressDialog.dismiss()
-                    findNavController().navigate(R.id.action_signUpFragment_to_loginFragment)
+                    findNavController().navigate(R.id.action_signUpFragment_to_signUpInfoFragment)
                 } else {
                     if(progressDialog.isShowing)
                         progressDialog.dismiss()

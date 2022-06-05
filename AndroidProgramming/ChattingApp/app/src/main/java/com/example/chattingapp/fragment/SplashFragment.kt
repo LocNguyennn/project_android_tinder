@@ -25,7 +25,10 @@ class SplashFragment : Fragment() {
         binding = FragmentSplashBinding.inflate(inflater,container,false)
         Handler().postDelayed({
             if(onBoardingFinished()){
-//                findNavController().navigate()
+                findNavController().navigate(R.id.action_splashFragment_to_welcomeFragment)
+            }
+            else{
+                findNavController().navigate(R.id.action_splashFragment_to_viewPagerFragment)
             }
         },2000)
         return binding.root

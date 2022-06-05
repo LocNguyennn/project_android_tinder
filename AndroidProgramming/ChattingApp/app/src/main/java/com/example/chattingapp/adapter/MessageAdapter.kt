@@ -6,10 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.chattingapp.Model.Message
+import com.example.chattingapp.model.Message
 import com.example.chattingapp.R
 import com.google.firebase.auth.FirebaseAuth
-import org.w3c.dom.Text
 
 class MessageAdapter(val context: Context, val messageList: ArrayList<Message>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {

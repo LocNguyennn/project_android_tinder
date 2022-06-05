@@ -40,6 +40,5 @@ class SignUpViewModel : ViewModel() {
         val regex =
             Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()])(?=\\S+$).{8,}$")
         return regex.matcher(password).matches()
-
     }
 }

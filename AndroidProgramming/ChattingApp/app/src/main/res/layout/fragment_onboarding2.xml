@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -11,11 +12,102 @@
         android:layout_height="match_parent"
         tools:context=".fragment.onboarding.Onboarding2">
 
-        <!-- TODO: Update blank fragment layout -->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/girl1"
+            android:layout_marginTop="60dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnNext"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginBottom="100dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="#E94057"
+            android:stateListAnimator="@null"
+            android:text=""
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+
+            app:layout_constraintBottom_toBottomOf="@id/btnNext"
+            app:layout_constraintLeft_toLeftOf="@id/btnNext"
+            app:layout_constraintRight_toRightOf="@id/btnNext"
+            app:layout_constraintTop_toTopOf="@id/btnNext"
+            app:srcCompat="@drawable/arrow_forward" />
+
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="480dp"
+            android:lineHeight="36px"
+            android:text="Matches"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="#E94057"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtDescription"
+            android:layout_width="295dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="40dp"
+            android:text="@string/onboarding2"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="#323755"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtTitle" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtDescription">
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/circle"
+                android:backgroundTint="#e6e6e6" />
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/circle"
+                android:backgroundTint="#E94057" />
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/circle"
+                android:backgroundTint="#e6e6e6" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

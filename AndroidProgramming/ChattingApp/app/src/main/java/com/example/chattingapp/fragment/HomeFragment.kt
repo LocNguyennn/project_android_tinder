@@ -11,10 +11,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.chattingapp.Model.User
+import com.example.chattingapp.ChattingApp
+import com.example.chattingapp.model.User
 import com.example.chattingapp.R
 import com.example.chattingapp.adapter.UserAdapter
 import com.example.chattingapp.databinding.FragmentHomeBinding
+import com.example.chattingapp.factory.HomeViewModelFactory
 import com.example.chattingapp.viewModel.HomeViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -29,6 +31,31 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
     private lateinit var listFriend: ArrayList<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel =
+            ViewModelProvider(this, HomeViewModelFactory(activity?.application as ChattingApp)).get(
+                HomeViewModel::class.java
+            )
+        mAuth = FirebaseAuth.getInstance()
+        if (viewModel.isRememberMe()) {
+            mAuth.signInWithEmailAndPassword(
+                viewModel.getEmail().toString(),
+                viewModel.getPassword().toString()
+            )
+                .addOnCompleteListener(requireActivity()) { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(requireContext(), "Login success", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "Wrong email or password",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
+                }
+        }
+
+
     }
 
     override fun onCreateView(
@@ -36,8 +63,6 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        mAuth = FirebaseAuth.getInstance()
         mDbRef = FirebaseDatabase.getInstance().getReference()
         userList = ArrayList()
         listFriend = ArrayList()
@@ -51,7 +76,7 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
         setUp()
 //        viewModel.loadData(userList)
         registerData()
-        listFriend = loadListFriend(mAuth.currentUser?.uid.toString(),listFriend)
+        listFriend = loadListFriend(mAuth.currentUser?.uid.toString(), listFriend)
         addListOfUser()
         binding.btnListFriend.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_listFriendFragment)
@@ -93,7 +118,7 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
     }
 
 
-    private fun loadListFriend(userUid: String, list : ArrayList<String>) : ArrayList<String>{
+    private fun loadListFriend(userUid: String, list: ArrayList<String>): ArrayList<String> {
         mDbRef.child("user")
             .child(userUid)
             .child("friendUid")
@@ -125,12 +150,12 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
             .setValue(list)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    var targetListFriend : ArrayList<String> = ArrayList()
-                    targetListFriend = loadListFriend(user.uid.toString(),targetListFriend)
+                    var targetListFriend: ArrayList<String> = ArrayList()
+                    targetListFriend = loadListFriend(user.uid.toString(), targetListFriend)
                     targetListFriend.add(mAuth.currentUser?.uid.toString())
-                    val targetList : List<String> = targetListFriend
+                    val targetList: List<String> = targetListFriend
                     mDbRef.child("user")
-                        .child(userList[position].uid.toString())
+                        .child(user.uid.toString())
                         .child("friendUid")
                         .setValue(targetList)
                 }

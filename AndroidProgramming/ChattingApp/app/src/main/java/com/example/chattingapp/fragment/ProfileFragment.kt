@@ -11,9 +11,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.chattingapp.ChattingApp
 import com.example.chattingapp.R
 import com.example.chattingapp.databinding.FragmentProfileBinding
+import com.example.chattingapp.factory.ProfileViewModelFactory
+import com.example.chattingapp.viewModel.HomeViewModel
+import com.example.chattingapp.viewModel.ProfileViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
@@ -22,9 +27,16 @@ class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mDbRef: DatabaseReference
-    private lateinit var imageUri : Uri
+    private lateinit var imageUri: Uri
+    private lateinit var viewModel: ProfileViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(
+            this,
+            ProfileViewModelFactory(activity?.application as ChattingApp)
+        ).get(
+            ProfileViewModel::class.java
+        )
     }
 
     override fun onCreateView(
@@ -48,10 +60,10 @@ class ProfileFragment : Fragment() {
         setLogout()
 
 
-        binding.btnUploadImage.setOnClickListener{
+        binding.btnUploadImage.setOnClickListener {
             selectImage()
         }
-        binding.btnUploadFirebase.setOnClickListener{
+        binding.btnUploadFirebase.setOnClickListener {
             uploadImageToFirebase()
         }
     }
@@ -63,9 +75,10 @@ class ProfileFragment : Fragment() {
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if(requestCode == 100  && resultCode == RESULT_OK){
+        if (requestCode == 100 && resultCode == RESULT_OK) {
             imageUri = data?.data!!
-            val bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, imageUri)
+            val bitmap =
+                MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, imageUri)
             binding.firebaseImage.setImageBitmap(bitmap)
         }
     }
@@ -75,47 +88,53 @@ class ProfileFragment : Fragment() {
         progressDialog.setMessage("Uploading File...")
         progressDialog.setCancelable(false)
         progressDialog.show()
-        val storageReference = FirebaseStorage.getInstance().getReference("images/${mAuth.currentUser?.uid}.jpeg")
+        val storageReference =
+            FirebaseStorage.getInstance().getReference("images/${mAuth.currentUser?.uid}.jpeg")
         storageReference.putFile(imageUri)
-            .addOnSuccessListener{
+            .addOnSuccessListener {
                 addImageToRealtimeDatabase()
-                Toast.makeText(requireContext(),"Successful uploaded",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Successful uploaded", Toast.LENGTH_SHORT).show()
 
-                if(progressDialog.isShowing)
+                if (progressDialog.isShowing)
                     progressDialog.dismiss()
             }
-            .addOnFailureListener{
-                if(progressDialog.isShowing)
+            .addOnFailureListener {
+                if (progressDialog.isShowing)
                     progressDialog.dismiss()
-                Toast.makeText(requireContext(),"Failed to upload image",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Failed to upload image", Toast.LENGTH_SHORT)
+                    .show()
             }
-
     }
 
     private fun addImageToRealtimeDatabase() {
-        FirebaseStorage.getInstance().getReference("images/${mAuth.currentUser?.uid.toString()}.jpeg").downloadUrl.addOnSuccessListener {
+        FirebaseStorage.getInstance()
+            .getReference("images/${mAuth.currentUser?.uid.toString()}.jpeg").downloadUrl.addOnSuccessListener {
             mDbRef.child("user").child(mAuth.currentUser?.uid.toString())
-                .child("imageUrl").setValue(it.toString()).addOnCompleteListener{
-                    if(it.isSuccessful){
-                        Toast.makeText(requireContext(),"Upload image successfully",Toast.LENGTH_SHORT).show()
+                .child("imageUrl").setValue(it.toString()).addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Upload image successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
-        }.addOnFailureListener{
-            Toast.makeText(requireContext(),"${it.message}",Toast.LENGTH_SHORT).show()
+        }.addOnFailureListener {
+            Toast.makeText(requireContext(), "${it.message}", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun setLogout() {
         binding.btnLogout.setOnClickListener {
+            viewModel.rememberMe(false)
             findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
         }
     }
 
 
-
     private fun findUser() {
         mDbRef.child("user").child(mAuth.currentUser!!.uid).get().addOnSuccessListener {
-            if(it.exists()){
+            if (it.exists()) {
                 binding.txtFullName.text = it.child("name").value.toString()
                 binding.txtUserName.text = it.child("email").value.toString()
             }
