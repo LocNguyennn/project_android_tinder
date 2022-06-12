@@ -68,6 +68,7 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
         listFriend = ArrayList()
         (activity as AppCompatActivity).supportActionBar?.hide()
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+//        setHasOptionsMenu(true)
         return binding.root
     }
 

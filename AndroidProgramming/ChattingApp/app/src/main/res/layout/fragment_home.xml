@@ -24,13 +24,13 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/userRecycleView"
             android:layout_width="391dp"
-            android:layout_height="741dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="70dp"
+            android:layout_marginTop="70dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgProfile" />
-
-
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="parent" />
         <Button
             android:id="@+id/btnListFriend"
             android:layout_width="wrap_content"
@@ -38,5 +38,13 @@
             android:text="List Friend"
             app:layout_constraintEnd_toStartOf="@+id/imgProfile"
             app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="#fff"
+            android:elevation="16dp"
+            app:menu="@menu/bottom_menu"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

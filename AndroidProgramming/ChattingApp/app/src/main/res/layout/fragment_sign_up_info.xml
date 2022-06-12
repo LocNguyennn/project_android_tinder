@@ -108,7 +108,7 @@
             android:layout_marginTop="32dp"
             app:civ_border_width="1dp"
             app:civ_border_color="#E94057"
-            android:src="@tools:sample/avatars"
+            tools:srcCompat="@tools:sample/avatars"
             app:layout_constraintTop_toBottomOf="@id/txtProfileDetails"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -136,18 +136,20 @@
             app:layout_constraintRight_toRightOf="@id/btnUploadImage"
             app:layout_constraintBottom_toBottomOf="@id/btnUploadImage"
             />
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnUploadFirebase"
             android:layout_width="295dp"
             android:layout_height="48dp"
-            android:text="Continue"
             android:layout_marginTop="32dp"
-            android:backgroundTint="#E94057"
             android:background="@drawable/rectangle"
-            app:layout_constraintTop_toBottomOf="@id/cbMale"
+            android:backgroundTint="#E94057"
+            android:text="Continue"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cbMale" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

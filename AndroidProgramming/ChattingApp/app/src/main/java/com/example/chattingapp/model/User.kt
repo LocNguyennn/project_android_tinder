@@ -11,8 +11,8 @@ class User {
     var friendUid : ArrayList<String>? = null
     var imageUrl : String? = null
     var gender : String? = null
-    var birthDay: Date? = null
-    var shortIntro: String? = null
+    var birthDay: String? = null
+    var description: String? = null
     constructor(){}
 
     constructor(name: String?, email: String?, uid: String?){
@@ -20,12 +20,6 @@ class User {
         this.email = email
         this.uid = uid
     }
-
-    constructor(gender: String?, birthDay: Date?) {
-        this.gender = gender
-        this.birthDay = birthDay
-    }
-
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

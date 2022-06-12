@@ -22,6 +22,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -55,9 +57,10 @@ class SignUpInfoFragment : Fragment() {
     @SuppressLint("SimpleDateFormat")
     private fun addToDatabase() {
         binding.btnUploadFirebase.setOnClickListener {
-            if (!"".equals(gender) && !"".equals(birthDay)) {
+            if (!"".equals(gender) && !"".equals(birthDay) && imageUri != null) {
                 mDbRef = FirebaseDatabase.getInstance().reference
                 // save details to database
+                val formatter = SimpleDateFormat("dd/MM/yyyy")
                 mDbRef.child("user").child(mAuth.currentUser?.uid.toString()).child("birthDay")
                     .setValue(birthDay)
                 mDbRef.child("user").child(mAuth.currentUser?.uid.toString()).child("gender")
@@ -81,17 +84,24 @@ class SignUpInfoFragment : Fragment() {
     }
 
     private fun chooseImage() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(intent, 100)
+        CropImage
+            .activity()
+            .setGuidelines(CropImageView.Guidelines.ON)
+            .start(requireContext(),this)
     }
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == 100 && resultCode == Activity.RESULT_OK) {
-            imageUri = data?.data!!
-            val bitmap =
-                MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, imageUri)
-            binding.avatar.setImageBitmap(bitmap)
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            val result = CropImage.getActivityResult(data);
+            if (resultCode == Activity.RESULT_OK) {
+                imageUri = result.uri
+                val bitmap =
+                    MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, imageUri)
+                binding.avatar.setImageBitmap(bitmap)
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                val error = result.error
+            }
         }
     }
 
