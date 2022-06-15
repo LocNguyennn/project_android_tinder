@@ -1,8 +1,6 @@
 package com.example.chattingapp.fragment
 
-import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
@@ -15,25 +13,25 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.chattingapp.R
+import com.example.chattingapp.databinding.FragmentSignUpInfo2Binding
 import com.example.chattingapp.databinding.FragmentSignUpInfoBinding
-import com.example.chattingapp.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
-import java.text.SimpleDateFormat
-import java.util.*
 
-class SignUpInfoFragment : Fragment() {
-    private lateinit var binding: FragmentSignUpInfoBinding
+class SignUpInfo2Fragment : Fragment() {
+    private lateinit var binding: FragmentSignUpInfo2Binding
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mDbRef: DatabaseReference
     private lateinit var imageUri: Uri
-    private var gender: String = ""
-    private var birthDay: String = ""
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,43 +40,45 @@ class SignUpInfoFragment : Fragment() {
         // Inflate the layout for this fragment
         mAuth = FirebaseAuth.getInstance()
         (activity as AppCompatActivity).supportActionBar?.hide()
-        binding = FragmentSignUpInfoBinding.inflate(inflater, container, false)
+        binding = FragmentSignUpInfo2Binding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        chooseBirthDay()
-        chooseGender()
+        mDbRef = FirebaseDatabase.getInstance().reference
         uploadImage()
-        addToDatabase()
+        loadData()
+        submitData()
+
     }
 
-    @SuppressLint("SimpleDateFormat")
-    private fun addToDatabase() {
-        binding.btnUploadFirebase.setOnClickListener {
-            if (!"".equals(gender) && !"".equals(birthDay) && imageUri != null) {
-                mDbRef = FirebaseDatabase.getInstance().reference
-                // save details to database
-                mDbRef.child("user").child(mAuth.currentUser?.uid.toString()).child("birthDay")
-                    .setValue(birthDay)
-                mDbRef.child("user").child(mAuth.currentUser?.uid.toString()).child("gender")
-                    .setValue(gender)
-                uploadImageToFirebase()
-                findNavController().navigate(R.id.action_signUpInfoFragment_to_signUpInfo2Fragment)
-            } else {
-                Toast.makeText(
-                    requireContext(),
-                    "Please fill all the information on screen",
-                    Toast.LENGTH_SHORT
-                ).show()
+    private fun loadData() {
+        mDbRef.child("user").child(mAuth.currentUser!!.uid).get().addOnSuccessListener {
+            if (it.exists()) {
+                Glide.with(requireView()).load(it.child("imageUrl").value.toString())
+                    .into(binding.avatar)
             }
         }
+    }
+
+    private fun submitData() {
+        binding.btnUploadFirebase.setOnClickListener {
+            if (!"".equals(binding.txtJob.text.toString()) && !"".equals(binding.txtAboutMe.text.toString())) {
+                mDbRef.child("user").child(mAuth.currentUser?.uid.toString()).child("job")
+                    .setValue(binding.txtJob.text.toString())
+                mDbRef.child("user").child(mAuth.currentUser?.uid.toString()).child("description")
+                    .setValue(binding.txtAboutMe.text.toString())
+                findNavController().navigate(R.id.action_signUpInfo2Fragment_to_homeFragment)
+            }
+        }
+
     }
 
     private fun uploadImage() {
         binding.btnUploadImage.setOnClickListener {
             chooseImage()
+            uploadImageToFirebase()
         }
     }
 
@@ -104,49 +104,6 @@ class SignUpInfoFragment : Fragment() {
         }
     }
 
-    private fun chooseGender() {
-        binding.apply {
-            cbMale.setOnClickListener {
-                if (cbMale.isChecked) {
-                    gender = "Male"
-                    cbFemale.isEnabled = false
-                } else {
-                    cbFemale.isEnabled = true
-                }
-            }
-            cbFemale.setOnClickListener {
-                if (cbFemale.isChecked) {
-                    gender = "Female"
-                    cbMale.isEnabled = false
-                } else {
-                    cbMale.isEnabled = true
-                }
-            }
-        }
-    }
-
-    @SuppressLint("SetTextI18n")
-    private fun chooseBirthDay() {
-        val calender = Calendar.getInstance()
-        val year = calender.get(Calendar.YEAR)
-        val month = calender.get(Calendar.MONTH)
-        val day = calender.get(Calendar.DAY_OF_MONTH)
-
-        // button click to show DatePickerDialog
-        binding.btnPickDate.setOnClickListener {
-            val dpd = DatePickerDialog(
-                requireContext(),
-                DatePickerDialog.OnDateSetListener { view, mYear, mMonth, mDay ->
-                    // set to textview
-                    birthDay = "${mDay}/${mMonth + 1}/${mYear}"
-                    binding.txtBirthDay.text = birthDay
-                }, year, month, day
-            )
-            //show dialog
-            dpd.show()
-        }
-    }
-
     private fun uploadImageToFirebase() {
         val progressDialog = ProgressDialog(requireContext())
         progressDialog.setMessage("Uploading File...")
@@ -158,6 +115,8 @@ class SignUpInfoFragment : Fragment() {
         storageReference.putFile(imageUri)
             .addOnSuccessListener {
                 addImageToRealtimeDatabase()
+                Toast.makeText(requireContext(), "Successful uploaded", Toast.LENGTH_SHORT)
+                    .show()
 
                 if (progressDialog.isShowing)
                     progressDialog.dismiss()
@@ -165,6 +124,12 @@ class SignUpInfoFragment : Fragment() {
             .addOnFailureListener {
                 if (progressDialog.isShowing)
                     progressDialog.dismiss()
+                Toast.makeText(
+                    requireContext(),
+                    "Failed to upload image",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
             }
     }
 
@@ -174,6 +139,11 @@ class SignUpInfoFragment : Fragment() {
                 mDbRef.child("user").child(mAuth.currentUser?.uid.toString())
                     .child("imageUrl").setValue(it.toString()).addOnCompleteListener {
                         if (it.isSuccessful) {
+                            Toast.makeText(
+                                requireContext(),
+                                "Upload image successfully",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
             }.addOnFailureListener {

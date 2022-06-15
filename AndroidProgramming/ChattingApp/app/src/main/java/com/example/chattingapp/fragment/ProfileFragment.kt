@@ -182,7 +182,6 @@ class ProfileFragment : Fragment() {
     private fun findUser() {
         mDbRef.child("user").child(mAuth.currentUser!!.uid).get().addOnSuccessListener {
             if (it.exists()) {
-//                binding.avatar.setImageBitmap(getBitmapFromURL(it.child("imageUrl").value.toString()))
                 Glide.with(requireView()).load(it.child("imageUrl").value.toString()).into(binding.avatar)
                 binding.txtUserName.setText(it.child("name").value.toString())
                 binding.txtLocation.setText(it.child("email").value.toString())

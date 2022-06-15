@@ -5,8 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.chattingapp.model.User
 import com.example.chattingapp.databinding.UserLayoutBinding
+import java.util.*
 
 class UserAdapter(val mListener: OnItemClickListener) : ListAdapter<User, UserAdapter.UserVH>(
     UserDiffUtilCallback()
@@ -46,7 +48,12 @@ class UserAdapter(val mListener: OnItemClickListener) : ListAdapter<User, UserAd
         }
 
         fun binding(item: User) {
-            binding.name.text = item.name.toString()
+            val name = "${item.name.toString()} , ${Calendar.getInstance().get(Calendar.YEAR) - item.birthDay?.substring(item.birthDay!!.length -4)!!
+                .toInt()}"
+            binding.name.text = name
+            binding.job.text = item.job
+            Glide.with(itemView).load(item.imageUrl.toString()).into(binding.avatar)
+
         }
     }
 

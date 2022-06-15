@@ -13,6 +13,7 @@ class User {
     var gender : String? = null
     var birthDay: String? = null
     var description: String? = null
+    var job : String? = null
     constructor(){}
 
     constructor(name: String?, email: String?, uid: String?){

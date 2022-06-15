@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.chattingapp.ChattingApp
 import com.example.chattingapp.model.User
 import com.example.chattingapp.R
@@ -54,8 +55,6 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
                     }
                 }
         }
-
-
     }
 
     override fun onCreateView(
@@ -161,7 +160,6 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
                         .setValue(targetList)
                 }
             }
-//        Toast.makeText(requireContext(), "Match ${userList[position].name} successful", Toast.LENGTH_SHORT).show()
     }
 
     private fun setUp() {
@@ -169,6 +167,11 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
         val lm = LinearLayoutManager(context)
         binding.userRecycleView.layoutManager = lm
         binding.userRecycleView.adapter = adapter
+        mDbRef.child("user").child(mAuth.currentUser!!.uid).get().addOnSuccessListener {
+            if (it.exists()) {
+                Glide.with(requireView()).load(it.child("imageUrl").value.toString())
+                    .into(binding.imgProfile)
+            }
+        }
     }
-
 }
