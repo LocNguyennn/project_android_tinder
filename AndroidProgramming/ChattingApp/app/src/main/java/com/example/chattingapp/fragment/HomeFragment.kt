@@ -71,13 +71,17 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        setUp()
+        registerData()
+        addListOfUser()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUp()
-//        viewModel.loadData(userList)
-        registerData()
+        bottomNavigation()
         listFriend = loadListFriend(mAuth.currentUser?.uid.toString(), listFriend)
-        addListOfUser()
         binding.btnListFriend.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_listFriendFragment)
         }
@@ -172,6 +176,56 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
                 Glide.with(requireView()).load(it.child("imageUrl").value.toString())
                     .into(binding.imgProfile)
             }
+        }
+    }
+    private fun addListOfFriend() {
+        val currentUid = mAuth.currentUser?.uid!!
+        var listFriend: ArrayList<String> = ArrayList()
+        FirebaseDatabase
+            .getInstance()
+            .getReference("user")
+            .child(currentUid)
+            .child("friendUid")
+            .get()
+            .addOnSuccessListener {
+                if (it.exists()) {
+                    listFriend = it.value as ArrayList<String>
+                }
+            }
+        mDbRef.child("user").addValueEventListener(object : ValueEventListener {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onDataChange(snapshot: DataSnapshot) {
+                userList.clear()
+                for (postSnapshot in snapshot.children) {
+                    val currentUser = postSnapshot.getValue(User::class.java)
+                    if (listFriend.contains(currentUser?.uid)) {
+                        userList.add(currentUser!!)
+                    }
+                }
+                adapter.submitList(userList)
+                adapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+    }
+
+    private fun bottomNavigation() {
+        binding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
+            when(item.itemId) {
+                R.id.home -> {
+                    addListOfUser()
+                    true
+                }
+                R.id.list_friend -> {
+                    addListOfFriend()
+                    true
+                }
+                else -> false
+            }
+
         }
     }
 }

@@ -39,6 +39,7 @@ class SignUpInfo2Fragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         mAuth = FirebaseAuth.getInstance()
+        mDbRef = FirebaseDatabase.getInstance().getReference()
         (activity as AppCompatActivity).supportActionBar?.hide()
         binding = FragmentSignUpInfo2Binding.inflate(inflater, container, false)
         return binding.root
@@ -46,9 +47,8 @@ class SignUpInfo2Fragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mDbRef = FirebaseDatabase.getInstance().reference
-        uploadImage()
         loadData()
+        uploadImage()
         submitData()
 
     }

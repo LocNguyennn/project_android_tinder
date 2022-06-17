@@ -25,14 +25,14 @@
             android:id="@+id/btnFinished"
             android:layout_width="65dp"
             android:layout_height="65dp"
-            android:layout_marginBottom="100dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/circle"
             android:backgroundTint="#E94057"
             android:stateListAnimator="@null"
             android:text=""
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/processBar"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
 
@@ -79,6 +79,7 @@
             app:layout_constraintTop_toBottomOf="@id/txtTitle" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/processBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"

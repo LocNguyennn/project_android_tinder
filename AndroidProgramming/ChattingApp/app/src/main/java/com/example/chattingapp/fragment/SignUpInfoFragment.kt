@@ -65,7 +65,6 @@ class SignUpInfoFragment : Fragment() {
                 mDbRef.child("user").child(mAuth.currentUser?.uid.toString()).child("gender")
                     .setValue(gender)
                 uploadImageToFirebase()
-                findNavController().navigate(R.id.action_signUpInfoFragment_to_signUpInfo2Fragment)
             } else {
                 Toast.makeText(
                     requireContext(),
@@ -158,7 +157,6 @@ class SignUpInfoFragment : Fragment() {
         storageReference.putFile(imageUri)
             .addOnSuccessListener {
                 addImageToRealtimeDatabase()
-
                 if (progressDialog.isShowing)
                     progressDialog.dismiss()
             }
@@ -174,6 +172,7 @@ class SignUpInfoFragment : Fragment() {
                 mDbRef.child("user").child(mAuth.currentUser?.uid.toString())
                     .child("imageUrl").setValue(it.toString()).addOnCompleteListener {
                         if (it.isSuccessful) {
+                            findNavController().navigate(R.id.action_signUpInfoFragment_to_signUpInfo2Fragment)
                         }
                     }
             }.addOnFailureListener {
