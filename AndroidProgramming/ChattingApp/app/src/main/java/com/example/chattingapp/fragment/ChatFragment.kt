@@ -60,7 +60,7 @@ class ChatFragment : Fragment() {
         binding.btnSend.setOnClickListener {
             // adding the message to db
             val message = binding.messageBox.text.toString()
-            val messageObject = Message(message, senderUid.toString())
+            val messageObject = Message(message, senderUid.toString(), receiverUid.toString())
             mDbRef.child("chats").child(senderRoom!!).child("messages").push()
                 .setValue(messageObject).addOnSuccessListener {
                     mDbRef.child("chats").child(receiverRoom!!).child("messages").push()
