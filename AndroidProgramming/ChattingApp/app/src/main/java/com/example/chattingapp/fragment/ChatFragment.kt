@@ -24,8 +24,8 @@ class ChatFragment : Fragment() {
     private lateinit var sharedViewModel: SharedViewModel
     private val senderUid = FirebaseAuth.getInstance().currentUser?.uid.toString()
     private lateinit var receiverUid: String
-    private lateinit var receiverRoom : String
-    private lateinit var senderRoom : String
+    private lateinit var receiverRoom: String
+    private lateinit var senderRoom: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,35 +59,40 @@ class ChatFragment : Fragment() {
     private fun sendChat() {
         binding.btnSend.setOnClickListener {
             // adding the message to db
-            val message = binding.messageBox.text.toString()
-            val messageObject = Message(message, senderUid.toString(), receiverUid.toString())
-            mDbRef.child("chats").child(senderRoom!!).child("messages").push()
-                .setValue(messageObject).addOnSuccessListener {
-                    mDbRef.child("chats").child(receiverRoom!!).child("messages").push()
-                        .setValue(messageObject)
-                    binding.messageBox.setText("")
-                }
+            if (!binding.messageBox.text.toString().equals("")) {
+                val message = binding.messageBox.text.toString()
+                val messageObject = Message(message, senderUid.toString(), receiverUid.toString())
+                mDbRef.child("chats").child(senderRoom!!).child("messages").push()
+                    .setValue(messageObject).addOnSuccessListener {
+                        mDbRef.child("chats").child(receiverRoom!!).child("messages").push()
+                            .setValue(messageObject)
+                        binding.messageBox.setText("")
+                    }
+            }
         }
     }
 
-    private fun setUp(){
+    private fun setUp() {
         binding.chatRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.chatRecyclerView.adapter = adapter
     }
-    private fun loadChat(){
+
+    private fun loadChat() {
         //logic for adding data to recyclerview
-        mDbRef.child("chats").child(senderRoom).child("messages").addValueEventListener(object: ValueEventListener{
-            @SuppressLint("NotifyDataSetChanged")
-            override fun onDataChange(snapshot: DataSnapshot) {
-                messageList.clear()
-                for(postSnapshot in snapshot.children){
-                    val message = postSnapshot.getValue(Message::class.java)
-                    messageList.add(message!!)
+        mDbRef.child("chats").child(senderRoom).child("messages")
+            .addValueEventListener(object : ValueEventListener {
+                @SuppressLint("NotifyDataSetChanged")
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    messageList.clear()
+                    for (postSnapshot in snapshot.children) {
+                        val message = postSnapshot.getValue(Message::class.java)
+                        messageList.add(message!!)
+                    }
+                    adapter.notifyDataSetChanged()
                 }
-                adapter.notifyDataSetChanged()
-            }
-            override fun onCancelled(error: DatabaseError) {
-            }
-        })
+
+                override fun onCancelled(error: DatabaseError) {
+                }
+            })
     }
 }
