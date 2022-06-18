@@ -6,16 +6,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.chattingapp.databinding.ListFriendItemBinding
 import com.example.chattingapp.model.User
 import com.example.chattingapp.databinding.UserLayoutBinding
 import java.util.*
 
-class UserAdapter(val mListener: OnItemClickListener) : ListAdapter<User, UserAdapter.UserVH>(
+class ListFriendAdapter(val mListener: OnItemClickListener) : ListAdapter<User, ListFriendAdapter.UserVH>(
     UserDiffUtilCallback()
 ) {
 
     interface OnItemClickListener {
-        fun onItemClick(position: Int)
+        fun onListFriendItemClick(position: Int)
     }
 
     class UserDiffUtilCallback : DiffUtil.ItemCallback<User>() {
@@ -29,31 +30,27 @@ class UserAdapter(val mListener: OnItemClickListener) : ListAdapter<User, UserAd
     }
 
     class UserVH private constructor(
-        var binding: UserLayoutBinding,
+        var binding: ListFriendItemBinding,
         listener: OnItemClickListener
     ) :
         RecyclerView.ViewHolder(binding.root) {
         companion object {
             fun from(parent: ViewGroup, listener: OnItemClickListener): UserVH {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = UserLayoutBinding.inflate(layoutInflater, parent, false)
+                val binding = ListFriendItemBinding.inflate(layoutInflater, parent, false)
                 return UserVH(binding, listener)
             }
         }
 
         init {
             itemView.setOnClickListener {
-                listener.onItemClick(adapterPosition)
+                listener.onListFriendItemClick(adapterPosition)
             }
         }
 
         fun binding(item: User) {
-            val name = "${item.name.toString()} , ${Calendar.getInstance().get(Calendar.YEAR) - item.birthDay?.substring(item.birthDay!!.length -4)!!
-                .toInt()}"
-            binding.name.text = name
-            binding.job.text = item.job
             Glide.with(itemView).load(item.imageUrl.toString()).into(binding.avatar)
-
+            binding.txtUserName.text = item.name
         }
     }
 

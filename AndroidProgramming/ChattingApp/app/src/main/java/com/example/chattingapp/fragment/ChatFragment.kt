@@ -57,8 +57,6 @@ class ChatFragment : Fragment() {
     }
 
     private fun sendChat() {
-//        Log.e("senderUid", senderUid.toString())
-//        Log.e("receiverUid", receiverUid.toString())
         binding.btnSend.setOnClickListener {
             // adding the message to db
             val message = binding.messageBox.text.toString()

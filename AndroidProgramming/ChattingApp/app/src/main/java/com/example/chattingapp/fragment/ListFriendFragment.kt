@@ -107,7 +107,7 @@ class ListFriendFragment : Fragment(), UserAdapter.OnItemClickListener{
 
     override fun onItemClick(position: Int) {
         sharedViewModel.sendData(userList[position])
-        findNavController().navigate(R.id.action_listFriendFragment_to_chatFragment)
+//        findNavController().navigate(R.id.action_listFriendFragment_to_chatFragment)
     }
 
 }

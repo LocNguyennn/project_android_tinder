@@ -44,8 +44,8 @@
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_listFriendFragment"
-            app:destination="@id/listFriendFragment" />
+            android:id="@+id/action_homeFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -58,15 +58,6 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/welcomeFragment"
             app:popUpToInclusive="false" />
-    </fragment>
-    <fragment
-        android:id="@+id/listFriendFragment"
-        android:name="com.example.chattingapp.fragment.ListFriendFragment"
-        android:label="ListFriendFragment"
-        tools:layout="@layout/fragment_list_friend">
-        <action
-            android:id="@+id/action_listFriendFragment_to_chatFragment"
-            app:destination="@id/chatFragment" />
     </fragment>
     <fragment
         android:id="@+id/chatFragment"

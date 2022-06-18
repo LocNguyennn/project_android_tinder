@@ -15,21 +15,27 @@ import com.bumptech.glide.Glide
 import com.example.chattingapp.ChattingApp
 import com.example.chattingapp.model.User
 import com.example.chattingapp.R
+import com.example.chattingapp.adapter.ListFriendAdapter
 import com.example.chattingapp.adapter.UserAdapter
 import com.example.chattingapp.databinding.FragmentHomeBinding
 import com.example.chattingapp.factory.HomeViewModelFactory
 import com.example.chattingapp.viewModel.HomeViewModel
+import com.example.chattingapp.viewModel.SharedViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
-class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
+class HomeFragment : Fragment(), UserAdapter.OnItemClickListener,
+    ListFriendAdapter.OnItemClickListener {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var mAuth: FirebaseAuth
     private lateinit var userList: ArrayList<User>
     private lateinit var adapter: UserAdapter
+    private lateinit var listFriendAdapter : ListFriendAdapter
     private lateinit var mDbRef: DatabaseReference
     private lateinit var viewModel: HomeViewModel
     private lateinit var listFriend: ArrayList<String>
+    private lateinit var sharedViewModel : SharedViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel =
@@ -37,6 +43,7 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
                 HomeViewModel::class.java
             )
         mAuth = FirebaseAuth.getInstance()
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         if (viewModel.isRememberMe()) {
             mAuth.signInWithEmailAndPassword(
                 viewModel.getEmail().toString(),
@@ -82,9 +89,6 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
         super.onViewCreated(view, savedInstanceState)
         bottomNavigation()
         listFriend = loadListFriend(mAuth.currentUser?.uid.toString(), listFriend)
-        binding.btnListFriend.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_listFriendFragment)
-        }
         binding.imgProfile.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
         }
@@ -168,6 +172,7 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
 
     private fun setUp() {
         adapter = UserAdapter(this)
+        listFriendAdapter = ListFriendAdapter(this)
         val lm = LinearLayoutManager(context)
         binding.userRecycleView.layoutManager = lm
         binding.userRecycleView.adapter = adapter
@@ -202,8 +207,8 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
                         userList.add(currentUser!!)
                     }
                 }
-                adapter.submitList(userList)
-                adapter.notifyDataSetChanged()
+                listFriendAdapter.submitList(userList)
+                listFriendAdapter.notifyDataSetChanged()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -216,10 +221,12 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
         binding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when(item.itemId) {
                 R.id.home -> {
+                    binding.userRecycleView.adapter = adapter
                     addListOfUser()
                     true
                 }
                 R.id.list_friend -> {
+                    binding.userRecycleView.adapter = listFriendAdapter
                     addListOfFriend()
                     true
                 }
@@ -227,5 +234,11 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener {
             }
 
         }
+    }
+
+    override fun onListFriendItemClick(position: Int) {
+        sharedViewModel.sendData(userList[position])
+        Toast.makeText(requireContext(),"${position}",Toast.LENGTH_SHORT).show()
+        findNavController().navigate(R.id.action_homeFragment_to_chatFragment)
     }
 }
