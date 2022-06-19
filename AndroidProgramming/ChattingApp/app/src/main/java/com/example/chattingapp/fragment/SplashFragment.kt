@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.chattingapp.R
 import com.example.chattingapp.databinding.FragmentSplashBinding
+import android.view.animation.AnimationUtils
 
 class SplashFragment : Fragment() {
     private lateinit var binding: FragmentSplashBinding
@@ -23,9 +24,12 @@ class SplashFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentSplashBinding.inflate(inflater,container,false)
+        binding.splashScreenAppLogoBackIv.startAnimation(AnimationUtils.loadAnimation(context,R.anim.scale_decrease_anim))
+        binding.splashScreenAppLogoIv.startAnimation(AnimationUtils.loadAnimation(context,R.anim.scale_decrease_anim))
         Handler().postDelayed({
             if(onBoardingFinished()){
                 findNavController().navigate(R.id.action_splashFragment_to_welcomeFragment)
+
             }
             else{
                 findNavController().navigate(R.id.action_splashFragment_to_viewPagerFragment)

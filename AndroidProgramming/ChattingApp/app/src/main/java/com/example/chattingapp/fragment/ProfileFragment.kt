@@ -9,9 +9,11 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.method.KeyListener
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -22,6 +24,7 @@ import com.example.chattingapp.R
 import com.example.chattingapp.databinding.FragmentProfileBinding
 import com.example.chattingapp.factory.ProfileViewModelFactory
 import com.example.chattingapp.viewModel.ProfileViewModel
+import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
@@ -39,6 +42,7 @@ class ProfileFragment : Fragment() {
     private lateinit var mDbRef: DatabaseReference
     private lateinit var imageUri: Uri
     private lateinit var viewModel: ProfileViewModel
+    private lateinit var keyListener : KeyListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(
@@ -57,6 +61,7 @@ class ProfileFragment : Fragment() {
         mAuth = FirebaseAuth.getInstance()
         mDbRef = FirebaseDatabase.getInstance().reference
         binding = FragmentProfileBinding.inflate(inflater, container, false)
+        keyListener = EditText(activity?.applicationContext).getKeyListener()
         return binding.root
     }
 
@@ -80,9 +85,9 @@ class ProfileFragment : Fragment() {
                 val textSave = "Save change";
                 if(textChange.equals(btnChangeInfo.text)){
                     btnChangeInfo.text = textSave
-                    txtUserName.isClickable = true
-                    txtDescription.isClickable = true
-                    txtLocation.isClickable = true
+                    enableEditText(txtDescription)
+                    enableEditText(txtUserName)
+                    enableEditText(txtLocation)
                 }
                 else if(textSave.equals(btnChangeInfo.text)){
                     val progressDialog = ProgressDialog(requireContext())
@@ -96,14 +101,26 @@ class ProfileFragment : Fragment() {
                     mDbRef.child("user").child(mAuth.currentUser?.uid.toString()).child("description")
                         .setValue(txtDescription.text.toString())
                     btnChangeInfo.text = textChange
-                    txtDescription.isClickable = false
-                    txtUserName.isClickable = false
-                    txtLocation.isClickable = false
+                    disableEditText(txtDescription)
+                    disableEditText(txtUserName)
+                    disableEditText(txtLocation)
                     if (progressDialog.isShowing)
                         progressDialog.dismiss()
                 }
             }
         }
+    }
+    private fun disableEditText(editText : TextInputEditText){
+        editText.isClickable = false
+        editText.isEnabled = false
+        editText.isCursorVisible = false
+        editText.keyListener = null
+    }
+    private fun enableEditText(editText : TextInputEditText){
+        editText.isClickable = true
+        editText.isEnabled = true
+        editText.isCursorVisible = true
+        editText.keyListener = keyListener
     }
 
     private fun selectImage() {

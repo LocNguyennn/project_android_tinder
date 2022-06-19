@@ -2,10 +2,13 @@ package com.example.chattingapp.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.chattingapp.R
 import com.example.chattingapp.model.User
 import com.example.chattingapp.databinding.UserLayoutBinding
 import java.util.*
@@ -15,7 +18,8 @@ class UserAdapter(val mListener: OnItemClickListener) : ListAdapter<User, UserAd
 ) {
 
     interface OnItemClickListener {
-        fun onItemClick(position: Int)
+        fun onAcceptClick(position: Int)
+        fun onCancelClick(position: Int)
     }
 
     class UserDiffUtilCallback : DiffUtil.ItemCallback<User>() {
@@ -42,8 +46,11 @@ class UserAdapter(val mListener: OnItemClickListener) : ListAdapter<User, UserAd
         }
 
         init {
-            itemView.setOnClickListener {
-                listener.onItemClick(adapterPosition)
+            itemView.findViewById<AppCompatButton>(R.id.btnAccept).setOnClickListener {
+                listener.onAcceptClick(adapterPosition)
+            }
+            itemView.findViewById<AppCompatButton>(R.id.btnCancel).setOnClickListener {
+                listener.onCancelClick(adapterPosition)
             }
         }
 

@@ -27,7 +27,7 @@
             android:id="@+id/btnNext"
             android:layout_width="65dp"
             android:layout_height="65dp"
-            android:backgroundTint="#E94057"
+            android:backgroundTint="@color/royalBlue"
             android:background="@drawable/circle"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -57,7 +57,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:textStyle="bold"
-            android:textColor="#E94057"
+            android:textColor="@color/royalBlue"
             android:textSize="24sp"
             android:lineHeight="36px"
             android:layout_marginTop="480dp"
@@ -94,7 +94,7 @@
                 android:layout_width="8dp"
                 android:layout_height="8dp"
                 android:background="@drawable/circle"
-                android:backgroundTint="#E94057"
+                android:backgroundTint="@color/royalBlue"
                 android:layout_marginEnd="8dp"
                 />
             <View

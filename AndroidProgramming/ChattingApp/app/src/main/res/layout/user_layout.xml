@@ -14,9 +14,11 @@
                     android:id="@+id/avatar"
                     android:layout_width="match_parent"
                     android:layout_height="450dp"
+                    android:scaleType="fitXY"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/bottom_cont"
                     />
 
                 <View
@@ -96,7 +98,7 @@
                     app:layout_constraintBottom_toBottomOf="@id/btnAccept"
                     />
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnHHeart"
+                    android:id="@+id/btnHeart"
                     android:layout_width="99dp"
                     android:layout_height="99dp"
                     android:background="@drawable/circle_with_border"
@@ -111,10 +113,17 @@
                     android:layout_width="42.5dp"
                     android:layout_height="36.47dp"
                     android:src="@drawable/heart"
-                    app:layout_constraintTop_toTopOf="@id/btnHHeart"
-                    app:layout_constraintLeft_toLeftOf="@id/btnHHeart"
-                    app:layout_constraintRight_toRightOf="@id/btnHHeart"
-                    app:layout_constraintBottom_toBottomOf="@id/btnHHeart"
+                    app:layout_constraintTop_toTopOf="@id/btnHeart"
+                    app:layout_constraintLeft_toLeftOf="@id/btnHeart"
+                    app:layout_constraintRight_toRightOf="@id/btnHeart"
+                    app:layout_constraintBottom_toBottomOf="@id/btnHeart"
+                    />
+                <View
+                    android:layout_marginTop="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black"
+                    app:layout_constraintTop_toBottomOf="@id/btnHeart"
                     />
 
 
