@@ -23,22 +23,32 @@ class SplashFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentSplashBinding.inflate(inflater,container,false)
-        binding.splashScreenAppLogoBackIv.startAnimation(AnimationUtils.loadAnimation(context,R.anim.scale_decrease_anim))
-        binding.splashScreenAppLogoIv.startAnimation(AnimationUtils.loadAnimation(context,R.anim.scale_decrease_anim))
+        binding = FragmentSplashBinding.inflate(inflater, container, false)
+        binding.splashScreenAppLogoBackIv.startAnimation(
+            AnimationUtils.loadAnimation(
+                context,
+                R.anim.scale_decrease_anim
+            )
+        )
+        binding.splashScreenAppLogoIv.startAnimation(
+            AnimationUtils.loadAnimation(
+                context,
+                R.anim.scale_decrease_anim
+            )
+        )
         Handler().postDelayed({
-            if(onBoardingFinished()){
+            if (onBoardingFinished()) {
                 findNavController().navigate(R.id.action_splashFragment_to_welcomeFragment)
 
-            }
-            else{
+            } else {
                 findNavController().navigate(R.id.action_splashFragment_to_viewPagerFragment)
             }
-        },2000)
+        }, 2000)
         return binding.root
     }
-    private fun onBoardingFinished() : Boolean {
+
+    private fun onBoardingFinished(): Boolean {
         val sharePref = requireActivity().getSharedPreferences("onBoarding", Context.MODE_PRIVATE)
-        return sharePref.getBoolean("Finished",false)
+        return sharePref.getBoolean("Finished", false)
     }
 }

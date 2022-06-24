@@ -42,7 +42,7 @@ class ProfileFragment : Fragment() {
     private lateinit var mDbRef: DatabaseReference
     private lateinit var imageUri: Uri
     private lateinit var viewModel: ProfileViewModel
-    private lateinit var keyListener : KeyListener
+    private lateinit var keyListener: KeyListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(
@@ -83,13 +83,12 @@ class ProfileFragment : Fragment() {
             btnChangeInfo.setOnClickListener {
                 val textChange = "Change informations";
                 val textSave = "Save change";
-                if(textChange.equals(btnChangeInfo.text)){
+                if (textChange.equals(btnChangeInfo.text)) {
                     btnChangeInfo.text = textSave
                     enableEditText(txtDescription)
                     enableEditText(txtUserName)
                     enableEditText(txtJob)
-                }
-                else if(textSave.equals(btnChangeInfo.text)){
+                } else if (textSave.equals(btnChangeInfo.text)) {
                     val progressDialog = ProgressDialog(requireContext())
                     progressDialog.setMessage("Uploading change to database...")
                     progressDialog.setCancelable(false)
@@ -98,7 +97,8 @@ class ProfileFragment : Fragment() {
                         .setValue(txtUserName.text.toString())
                     mDbRef.child("user").child(mAuth.currentUser?.uid.toString()).child("job")
                         .setValue(txtJob.text.toString())
-                    mDbRef.child("user").child(mAuth.currentUser?.uid.toString()).child("description")
+                    mDbRef.child("user").child(mAuth.currentUser?.uid.toString())
+                        .child("description")
                         .setValue(txtDescription.text.toString())
                     btnChangeInfo.text = textChange
                     disableEditText(txtDescription)
@@ -110,14 +110,16 @@ class ProfileFragment : Fragment() {
             }
         }
     }
-    private fun disableEditText(editText : TextInputEditText){
+
+    private fun disableEditText(editText: TextInputEditText) {
         editText.isClickable = false
         editText.isEnabled = false
         editText.isCursorVisible = false
         editText.keyListener = null
         editText.isFocusable = false
     }
-    private fun enableEditText(editText : TextInputEditText){
+
+    private fun enableEditText(editText: TextInputEditText) {
         editText.isClickable = true
         editText.isEnabled = true
         editText.isCursorVisible = true
@@ -128,13 +130,13 @@ class ProfileFragment : Fragment() {
         CropImage
             .activity()
             .setGuidelines(CropImageView.Guidelines.ON)
-            .start(requireContext(),this)
+            .start(requireContext(), this)
     }
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            val result : CropImage.ActivityResult = CropImage.getActivityResult(data);
+            val result: CropImage.ActivityResult = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 imageUri = result.uri
                 val bitmap =
@@ -173,19 +175,19 @@ class ProfileFragment : Fragment() {
     private fun addImageToRealtimeDatabase() {
         FirebaseStorage.getInstance()
             .getReference("images/${mAuth.currentUser?.uid.toString()}.jpeg").downloadUrl.addOnSuccessListener {
-            mDbRef.child("user").child(mAuth.currentUser?.uid.toString())
-                .child("imageUrl").setValue(it.toString()).addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        Toast.makeText(
-                            requireContext(),
-                            "Upload image successfully",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                mDbRef.child("user").child(mAuth.currentUser?.uid.toString())
+                    .child("imageUrl").setValue(it.toString()).addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            Toast.makeText(
+                                requireContext(),
+                                "Upload image successfully",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
-                }
-        }.addOnFailureListener {
-            Toast.makeText(requireContext(), "${it.message}", Toast.LENGTH_SHORT).show()
-        }
+            }.addOnFailureListener {
+                Toast.makeText(requireContext(), "${it.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun setLogout() {
@@ -200,7 +202,8 @@ class ProfileFragment : Fragment() {
     private fun findUser() {
         mDbRef.child("user").child(mAuth.currentUser!!.uid).get().addOnSuccessListener {
             if (it.exists()) {
-                Glide.with(requireView()).load(it.child("imageUrl").value.toString()).into(binding.avatar)
+                Glide.with(requireView()).load(it.child("imageUrl").value.toString())
+                    .into(binding.avatar)
                 binding.txtUserName.setText(it.child("name").value.toString())
                 binding.txtJob.setText(it.child("email").value.toString())
                 binding.txtDescription.setText(it.child("description").value.toString())

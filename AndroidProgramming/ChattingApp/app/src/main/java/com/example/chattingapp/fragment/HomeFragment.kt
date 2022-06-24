@@ -33,13 +33,13 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener,
     private lateinit var binding: FragmentHomeBinding
     private lateinit var mAuth: FirebaseAuth
     private lateinit var userList: ArrayList<User>
-    private lateinit var removeList : ArrayList<String>
+    private lateinit var removeList: ArrayList<String>
     private lateinit var adapter: UserAdapter
-    private lateinit var listFriendAdapter : ListFriendAdapter
+    private lateinit var listFriendAdapter: ListFriendAdapter
     private lateinit var mDbRef: DatabaseReference
     private lateinit var viewModel: HomeViewModel
     private lateinit var listFriend: ArrayList<String>
-    private lateinit var sharedViewModel : SharedViewModel
+    private lateinit var sharedViewModel: SharedViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,7 +80,6 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener,
         listFriend = ArrayList()
         (activity as AppCompatActivity).supportActionBar?.hide()
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-//        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -94,8 +93,8 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bottomNavigation()
-        listFriend = loadListFriend(mAuth.currentUser?.uid.toString(), listFriend,"friendUid")
-        removeList = loadListFriend(mAuth.currentUser?.uid.toString(), removeList,"removeUid")
+        listFriend = loadListFriend(mAuth.currentUser?.uid.toString(), listFriend, "friendUid")
+        removeList = loadListFriend(mAuth.currentUser?.uid.toString(), removeList, "removeUid")
         binding.imgProfile.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
         }
@@ -116,7 +115,9 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener,
                 for (postSnapshot in snapshot.children) {
                     val currentUser = postSnapshot.getValue(User::class.java)
                     if (mAuth.currentUser?.uid != currentUser?.uid && !listFriend.contains(
-                            currentUser?.uid) && !removeList.contains(currentUser?.uid
+                            currentUser?.uid
+                        ) && !removeList.contains(
+                            currentUser?.uid
                         )
                     ) {
                         userList.add(currentUser!!)
@@ -132,9 +133,12 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener,
         })
     }
 
-
-    private fun loadListFriend(userUid: String, list: ArrayList<String>, typeOfList : String): ArrayList<String> {
-        if(typeOfList.equals("friendUid")){
+    private fun loadListFriend(
+        userUid: String,
+        list: ArrayList<String>,
+        typeOfList: String
+    ): ArrayList<String> {
+        if (typeOfList.equals("friendUid")) {
             removeList.removeAll(list)
         }
         mDbRef.child("user")
@@ -169,7 +173,8 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener,
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     var targetListFriend: ArrayList<String> = ArrayList()
-                    targetListFriend = loadListFriend(user.uid.toString(), targetListFriend,"friendUid")
+                    targetListFriend =
+                        loadListFriend(user.uid.toString(), targetListFriend, "friendUid")
                     targetListFriend.add(mAuth.currentUser?.uid.toString())
                     val targetList: List<String> = targetListFriend
                     mDbRef.child("user")
@@ -190,7 +195,11 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener,
             .setValue(list)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    Toast.makeText(requireContext(), "Remove ${user.name} successful", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Remove ${user.name} successful",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
     }
@@ -208,6 +217,7 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener,
             }
         }
     }
+
     private fun addListOfFriend() {
         val currentUid = mAuth.currentUser?.uid!!
         var listFriend: ArrayList<String> = ArrayList()
@@ -244,7 +254,7 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener,
 
     private fun bottomNavigation() {
         binding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
-            when(item.itemId) {
+            when (item.itemId) {
                 R.id.home -> {
                     binding.userRecycleView.adapter = adapter
                     addListOfUser()
@@ -263,7 +273,6 @@ class HomeFragment : Fragment(), UserAdapter.OnItemClickListener,
 
     override fun onListFriendItemClick(position: Int) {
         sharedViewModel.sendData(userList[position])
-        Toast.makeText(requireContext(),"${position}",Toast.LENGTH_SHORT).show()
         findNavController().navigate(R.id.action_homeFragment_to_chatFragment)
     }
 }

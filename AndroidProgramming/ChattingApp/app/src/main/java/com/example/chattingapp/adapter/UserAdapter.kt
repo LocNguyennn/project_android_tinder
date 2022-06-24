@@ -55,8 +55,11 @@ class UserAdapter(val mListener: OnItemClickListener) : ListAdapter<User, UserAd
         }
 
         fun binding(item: User) {
-            val name = "${item.name.toString()} , ${Calendar.getInstance().get(Calendar.YEAR) - item.birthDay?.substring(item.birthDay!!.length -4)!!
-                .toInt()}"
+            val name = "${item.name.toString()} , ${
+                Calendar.getInstance()
+                    .get(Calendar.YEAR) - item.birthDay?.substring(item.birthDay!!.length - 4)!!
+                    .toInt()
+            }"
             binding.name.text = name
             binding.txtDescription.setText(item.description)
             binding.job.text = item.job

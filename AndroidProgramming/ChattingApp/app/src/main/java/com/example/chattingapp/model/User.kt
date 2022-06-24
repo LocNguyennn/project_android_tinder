@@ -8,15 +8,16 @@ class User {
     var name: String? = null
     var email: String? = null
     var uid: String? = null
-    var friendUid : ArrayList<String>? = null
-    var imageUrl : String? = null
-    var gender : String? = null
+    var friendUid: ArrayList<String>? = null
+    var imageUrl: String? = null
+    var gender: String? = null
     var birthDay: String? = null
     var description: String? = null
-    var job : String? = null
-    constructor(){}
+    var job: String? = null
 
-    constructor(name: String?, email: String?, uid: String?){
+    constructor() {}
+
+    constructor(name: String?, email: String?, uid: String?) {
         this.name = name
         this.email = email
         this.uid = uid
@@ -45,7 +46,6 @@ class User {
         result = 31 * result + (imageUrl?.hashCode() ?: 0)
         return result
     }
-
 
 
 }

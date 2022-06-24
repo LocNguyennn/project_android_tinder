@@ -10,7 +10,7 @@ import com.example.chattingapp.adapter.ViewPagerAdapter
 import com.example.chattingapp.databinding.FragmentViewPagerBinding
 
 class ViewPagerFragment : Fragment() {
-    private lateinit var binding : FragmentViewPagerBinding
+    private lateinit var binding: FragmentViewPagerBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -20,13 +20,14 @@ class ViewPagerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentViewPagerBinding.inflate(inflater,container,false)
+        binding = FragmentViewPagerBinding.inflate(inflater, container, false)
         val fragmentList = arrayListOf(
             Onboarding1(),
             Onboarding2(),
             Onboarding3()
         )
-        val adapter = ViewPagerAdapter(fragmentList,requireActivity().supportFragmentManager,lifecycle)
+        val adapter =
+            ViewPagerAdapter(fragmentList, requireActivity().supportFragmentManager, lifecycle)
         binding.viewPager.adapter = adapter
         return binding.root
     }

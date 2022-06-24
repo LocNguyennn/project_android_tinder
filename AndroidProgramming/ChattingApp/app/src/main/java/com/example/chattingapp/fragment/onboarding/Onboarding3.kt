@@ -11,7 +11,7 @@ import com.example.chattingapp.R
 import com.example.chattingapp.databinding.FragmentOnboarding3Binding
 
 class Onboarding3 : Fragment() {
-    private lateinit var binding : FragmentOnboarding3Binding
+    private lateinit var binding: FragmentOnboarding3Binding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -21,14 +21,14 @@ class Onboarding3 : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentOnboarding3Binding.inflate(inflater,container,false)
+        binding = FragmentOnboarding3Binding.inflate(inflater, container, false)
         return binding.root
     }
 
-    private fun onBoardingFinished(){
+    private fun onBoardingFinished() {
         val sharedPref = requireActivity().getSharedPreferences("onBoarding", Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
-        editor.putBoolean("Finished",true)
+        editor.putBoolean("Finished", true)
         editor.apply()
     }
 

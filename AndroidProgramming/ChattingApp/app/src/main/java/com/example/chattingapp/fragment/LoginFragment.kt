@@ -48,6 +48,9 @@ class LoginFragment : Fragment() {
                 binding.loginPassword.text.toString().trim()
             )
         }
+        binding.btnSignup.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
+        }
         listenerSuccessEvent()
         listenerErrorEvent()
     }

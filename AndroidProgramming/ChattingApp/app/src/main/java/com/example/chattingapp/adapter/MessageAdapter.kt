@@ -22,10 +22,10 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>) 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == 1) {
             // inflate receive
-            val view : View = LayoutInflater.from(context).inflate(R.layout.receive,parent,false)
+            val view: View = LayoutInflater.from(context).inflate(R.layout.receive, parent, false)
             return ReceiveViewHolder(view)
         } else {
-            val view : View = LayoutInflater.from(context).inflate(R.layout.sent,parent,false)
+            val view: View = LayoutInflater.from(context).inflate(R.layout.sent, parent, false)
             return SentViewHolder(view)
         }
     }
@@ -35,32 +35,38 @@ class MessageAdapter(val context: Context, val messageList: ArrayList<Message>) 
         if (holder.javaClass == SentViewHolder::class.java) {
             // do the stuff for sent view holder
             val viewHolder = holder as SentViewHolder
-            val imageUrl : String
-            if(FirebaseAuth.getInstance().currentUser?.uid.toString().equals(currentMessage.senderId.toString())){
+            val imageUrl: String
+            if (FirebaseAuth.getInstance().currentUser?.uid.toString()
+                    .equals(currentMessage.senderId.toString())
+            ) {
                 imageUrl = currentMessage.senderId.toString()
-            }
-            else
+            } else
                 imageUrl = currentMessage.receiverId.toString()
-            FirebaseDatabase.getInstance().getReference().child("user").child(imageUrl).get().addOnSuccessListener {
-                if(it.exists()){
-                    Glide.with(holder.itemView).load(it.child("imageUrl").value.toString()).into(holder.image)
+            FirebaseDatabase.getInstance().getReference().child("user").child(imageUrl).get()
+                .addOnSuccessListener {
+                    if (it.exists()) {
+                        Glide.with(holder.itemView).load(it.child("imageUrl").value.toString())
+                            .into(holder.image)
+                    }
                 }
-            }
             holder.sentMessage.text = currentMessage.message
         } else {
             // do the stuff for receive view holder
             val viewHolder = holder as ReceiveViewHolder
-            val imageUrl : String
-            if(FirebaseAuth.getInstance().currentUser?.uid.toString().equals(currentMessage.senderId.toString())){
+            val imageUrl: String
+            if (FirebaseAuth.getInstance().currentUser?.uid.toString()
+                    .equals(currentMessage.senderId.toString())
+            ) {
                 imageUrl = currentMessage.receiverId.toString()
-            }
-            else
+            } else
                 imageUrl = currentMessage.senderId.toString()
-            FirebaseDatabase.getInstance().getReference().child("user").child(imageUrl).get().addOnSuccessListener {
-                if(it.exists()){
-                    Glide.with(holder.itemView).load(it.child("imageUrl").value.toString()).into(holder.image)
+            FirebaseDatabase.getInstance().getReference().child("user").child(imageUrl).get()
+                .addOnSuccessListener {
+                    if (it.exists()) {
+                        Glide.with(holder.itemView).load(it.child("imageUrl").value.toString())
+                            .into(holder.image)
+                    }
                 }
-            }
             holder.receiveMessage.text = currentMessage.message
         }
     }

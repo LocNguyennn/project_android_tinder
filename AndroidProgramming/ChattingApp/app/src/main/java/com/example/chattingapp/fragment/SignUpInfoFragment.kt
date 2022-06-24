@@ -31,7 +31,7 @@ class SignUpInfoFragment : Fragment() {
     private lateinit var binding: FragmentSignUpInfoBinding
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mDbRef: DatabaseReference
-    private lateinit var imageUri: Uri
+    private var imageUri: Uri = Uri.EMPTY
     private var gender: String = ""
     private var birthDay: String = ""
 
@@ -57,7 +57,7 @@ class SignUpInfoFragment : Fragment() {
     @SuppressLint("SimpleDateFormat")
     private fun addToDatabase() {
         binding.btnUploadFirebase.setOnClickListener {
-            if (!"".equals(gender) && !"".equals(birthDay) && imageUri != null) {
+            if (!"".equals(gender) && !"".equals(birthDay) && imageUri != Uri.EMPTY) {
                 mDbRef = FirebaseDatabase.getInstance().reference
                 // save details to database
                 mDbRef.child("user").child(mAuth.currentUser?.uid.toString()).child("birthDay")

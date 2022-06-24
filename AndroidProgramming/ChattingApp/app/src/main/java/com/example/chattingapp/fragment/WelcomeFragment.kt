@@ -11,7 +11,7 @@ import com.example.chattingapp.R
 import com.example.chattingapp.databinding.FragmentWelcomeBinding
 
 class WelcomeFragment : Fragment() {
-    private lateinit var binding : FragmentWelcomeBinding
+    private lateinit var binding: FragmentWelcomeBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -21,8 +21,8 @@ class WelcomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding  = FragmentWelcomeBinding.inflate(inflater,container,false)
-        if(onLoginSuccess()){
+        binding = FragmentWelcomeBinding.inflate(inflater, container, false)
+        if (onLoginSuccess()) {
             findNavController().navigate(R.id.action_welcomeFragment_to_homeFragment)
         }
         return binding.root
@@ -39,8 +39,10 @@ class WelcomeFragment : Fragment() {
             }
         }
     }
-    private fun onLoginSuccess() : Boolean{
-        val sharePreferences = requireActivity().getSharedPreferences("shared_preference", Context.MODE_PRIVATE)
-        return sharePreferences.getBoolean("KEY_REMEMBER_ME",false)
+
+    private fun onLoginSuccess(): Boolean {
+        val sharePreferences =
+            requireActivity().getSharedPreferences("shared_preference", Context.MODE_PRIVATE)
+        return sharePreferences.getBoolean("KEY_REMEMBER_ME", false)
     }
 }

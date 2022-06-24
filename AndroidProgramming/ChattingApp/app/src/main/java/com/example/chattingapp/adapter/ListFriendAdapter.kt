@@ -11,9 +11,10 @@ import com.example.chattingapp.model.User
 import com.example.chattingapp.databinding.UserLayoutBinding
 import java.util.*
 
-class ListFriendAdapter(val mListener: OnItemClickListener) : ListAdapter<User, ListFriendAdapter.UserVH>(
-    UserDiffUtilCallback()
-) {
+class ListFriendAdapter(val mListener: OnItemClickListener) :
+    ListAdapter<User, ListFriendAdapter.UserVH>(
+        UserDiffUtilCallback()
+    ) {
 
     interface OnItemClickListener {
         fun onListFriendItemClick(position: Int)

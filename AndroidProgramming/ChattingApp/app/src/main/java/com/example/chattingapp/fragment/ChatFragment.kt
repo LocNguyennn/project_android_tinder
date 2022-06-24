@@ -34,9 +34,6 @@ class ChatFragment : Fragment() {
         // Inflate the layout for this fragment
         Log.e("chatFragment", "onCreateView()")
 
-//        (activity as AppCompatActivity).supportActionBar?.show()
-//        (activity as AppCompatActivity).supportActionBar?.title = name.toString()
-
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         mDbRef = FirebaseDatabase.getInstance().getReference()
         messageList = ArrayList()

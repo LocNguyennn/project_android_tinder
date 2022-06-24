@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.chattingapp.model.User
 import com.example.chattingapp.sharePreference.MySharedPreferences
 
-class HomeViewModel(val sharedPrefs : MySharedPreferences) : ViewModel() {
+class HomeViewModel(val sharedPrefs: MySharedPreferences) : ViewModel() {
     private var _listOfData: MutableLiveData<ArrayList<User>> = MutableLiveData()
     val listOfData: LiveData<ArrayList<User>>
         get() = _listOfData
@@ -14,13 +14,16 @@ class HomeViewModel(val sharedPrefs : MySharedPreferences) : ViewModel() {
     fun loadData(listUser: ArrayList<User>) {
         _listOfData.postValue(listUser)
     }
+
     fun getEmail(): String? {
         return sharedPrefs.getEmail();
     }
-    fun getPassword() : String? {
+
+    fun getPassword(): String? {
         return sharedPrefs.getPassword();
     }
-    fun isRememberMe() : Boolean{
+
+    fun isRememberMe(): Boolean {
         return sharedPrefs.isRemembered()
     }
 
