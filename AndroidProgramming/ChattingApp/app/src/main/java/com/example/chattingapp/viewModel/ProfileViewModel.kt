@@ -7,7 +7,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
-class ProfileViewModel(val sharedPrefs : MySharedPreferences) : ViewModel() {
+class ProfileViewModel(val sharedPrefs: MySharedPreferences) : ViewModel() {
     fun rememberMe(isRemembered: Boolean) {
         sharedPrefs.saveRememberMe(isRemembered)
     }

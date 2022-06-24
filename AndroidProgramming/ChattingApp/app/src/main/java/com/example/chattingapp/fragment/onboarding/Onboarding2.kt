@@ -10,7 +10,7 @@ import com.example.chattingapp.R
 import com.example.chattingapp.databinding.FragmentOnboarding2Binding
 
 class Onboarding2 : Fragment() {
-    private lateinit var binding : FragmentOnboarding2Binding
+    private lateinit var binding: FragmentOnboarding2Binding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -20,7 +20,7 @@ class Onboarding2 : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentOnboarding2Binding.inflate(inflater,container,false)
+        binding = FragmentOnboarding2Binding.inflate(inflater, container, false)
         return binding.root
     }
 

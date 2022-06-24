@@ -8,7 +8,7 @@ import com.example.chattingapp.viewModel.LoginViewModel
 
 class HomeViewModelFactory(val app: ChattingApp) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if(modelClass.isAssignableFrom(HomeViewModel::class.java)){
+        if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
             return HomeViewModel(app.prefs) as T
         }
         throw IllegalArgumentException("unknown view model")

@@ -90,11 +90,11 @@ class SignUpFragment : Fragment() {
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
                     addUserToDatabase(name, email, mAuth.currentUser?.uid!!)
-                    if(progressDialog.isShowing)
+                    if (progressDialog.isShowing)
                         progressDialog.dismiss()
                     findNavController().navigate(R.id.action_signUpFragment_to_signUpInfoFragment)
                 } else {
-                    if(progressDialog.isShowing)
+                    if (progressDialog.isShowing)
                         progressDialog.dismiss()
                     Toast.makeText(requireContext(), "Some error occurred", Toast.LENGTH_SHORT)
                         .show()

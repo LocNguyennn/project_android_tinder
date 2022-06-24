@@ -9,7 +9,8 @@ class SharedViewModel : ViewModel() {
     fun sendData(user: User) {
         this.user = user
     }
-    fun receiveData() : User{
+
+    fun receiveData(): User {
         return this.user;
     }
 }

@@ -29,14 +29,16 @@ class LoginViewModel(val sharedPrefs: MySharedPreferences) : ViewModel() {
         }
         _isSuccessEvent.postValue(true)
     }
+
     private fun isEmailValid(email: String): Boolean {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
-    fun saveUserInfo(email : String ,password: String) {
+    fun saveUserInfo(email: String, password: String) {
         saveEmail(email)
         savePassword(password)
     }
+
     private fun isPasswordValid(password: String): Boolean {
         val regex =
             Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()])(?=\\S+$).{8,}$")
@@ -47,13 +49,16 @@ class LoginViewModel(val sharedPrefs: MySharedPreferences) : ViewModel() {
     fun rememberMe(isRemembered: Boolean) {
         sharedPrefs.saveRememberMe(isRemembered)
     }
-    fun saveEmail(email : String){
+
+    fun saveEmail(email: String) {
         sharedPrefs.saveEmail(email)
     }
-    fun savePassword(password : String){
+
+    fun savePassword(password: String) {
         sharedPrefs.savePassword(password)
     }
-    fun isRemember() : Boolean{
+
+    fun isRemember(): Boolean {
         return sharedPrefs.isRemembered()
     }
 }
