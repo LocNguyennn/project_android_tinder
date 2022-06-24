@@ -58,6 +58,7 @@ class UserAdapter(val mListener: OnItemClickListener) : ListAdapter<User, UserAd
             val name = "${item.name.toString()} , ${Calendar.getInstance().get(Calendar.YEAR) - item.birthDay?.substring(item.birthDay!!.length -4)!!
                 .toInt()}"
             binding.name.text = name
+            binding.txtDescription.setText(item.description)
             binding.job.text = item.job
             Glide.with(itemView).load(item.imageUrl.toString()).into(binding.avatar)
 

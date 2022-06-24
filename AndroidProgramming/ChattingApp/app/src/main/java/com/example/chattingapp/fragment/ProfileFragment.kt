@@ -87,7 +87,7 @@ class ProfileFragment : Fragment() {
                     btnChangeInfo.text = textSave
                     enableEditText(txtDescription)
                     enableEditText(txtUserName)
-                    enableEditText(txtLocation)
+                    enableEditText(txtJob)
                 }
                 else if(textSave.equals(btnChangeInfo.text)){
                     val progressDialog = ProgressDialog(requireContext())
@@ -96,14 +96,14 @@ class ProfileFragment : Fragment() {
                     progressDialog.show()
                     mDbRef.child("user").child(mAuth.currentUser?.uid.toString()).child("name")
                         .setValue(txtUserName.text.toString())
-                    mDbRef.child("user").child(mAuth.currentUser?.uid.toString()).child("location")
-                        .setValue(txtLocation.text.toString())
+                    mDbRef.child("user").child(mAuth.currentUser?.uid.toString()).child("job")
+                        .setValue(txtJob.text.toString())
                     mDbRef.child("user").child(mAuth.currentUser?.uid.toString()).child("description")
                         .setValue(txtDescription.text.toString())
                     btnChangeInfo.text = textChange
                     disableEditText(txtDescription)
                     disableEditText(txtUserName)
-                    disableEditText(txtLocation)
+                    disableEditText(txtJob)
                     if (progressDialog.isShowing)
                         progressDialog.dismiss()
                 }
@@ -115,6 +115,7 @@ class ProfileFragment : Fragment() {
         editText.isEnabled = false
         editText.isCursorVisible = false
         editText.keyListener = null
+        editText.isFocusable = false
     }
     private fun enableEditText(editText : TextInputEditText){
         editText.isClickable = true
@@ -201,7 +202,7 @@ class ProfileFragment : Fragment() {
             if (it.exists()) {
                 Glide.with(requireView()).load(it.child("imageUrl").value.toString()).into(binding.avatar)
                 binding.txtUserName.setText(it.child("name").value.toString())
-                binding.txtLocation.setText(it.child("email").value.toString())
+                binding.txtJob.setText(it.child("email").value.toString())
                 binding.txtDescription.setText(it.child("description").value.toString())
             }
         }
